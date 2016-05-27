@@ -3,6 +3,7 @@ package main
 import (
     "fmt"
     "time"
+    "math/rand"
 )
 
 func timeTrack(start time.Time, name string) {
@@ -10,20 +11,22 @@ func timeTrack(start time.Time, name string) {
     fmt.Printf("%s took %s", name, elapsed)
 }
 
-
 func main() {
+    var source [50000000]int
+    for i := 0; i < len(source); i++ {
+        source[i] = rand.Int()
+    }
     m := make(map[int]int)
-
     start := time.Now()
-    for i := 0; i < 50000000; i++ {
-        m[i] = 0
+    for x := range source {
+        m[x] = 0
     }
     fmt.Printf("Insertion: %s", time.Since(start))
     
     start = time.Now()
     acc := 0
-    for i := 0; i < 50000000; i++ {
-        acc += m[i] % 10
+    for x := range source {
+        acc += m[x] % 10
     }
     fmt.Printf("Lookups: %s", time.Since(start))
 
